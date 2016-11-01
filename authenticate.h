@@ -8,6 +8,6 @@
 const int AUTH_OK;
 const int AUTH_FAIL;
 
-int pam_auth();
+int authenticate();
 
 #endif //PAM_C_PAM_AUTH_H

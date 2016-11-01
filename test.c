@@ -1,34 +1,13 @@
 //
-// Created by piotr on 26.10.16.
+// Created by piotr on 11/1/16.
 //
+
 #include <stdio.h>
-#include "authenticate.h"
 #include "counter.h"
 
 #define STATUS_OK 0
 #define STATUS_FAIL 1
 #define STATUS_END 2
-
-int handle_single_txt();
-
-
-int main(int argc, char **argv) {
-    if (authenticate() == AUTH_OK) {
-        printf("Auth ok!\n");
-        while (1) {
-            int ret = handle_single_txt();
-            if (ret == STATUS_FAIL) {
-                return 1;
-            } else if (ret == STATUS_END) {
-                break;
-            }
-        }
-        cleanup();
-    } else {
-        printf("Auth failed!\n");
-    }
-    return 0;
-}
 
 int handle_single_txt() {
     int ret;
@@ -49,4 +28,17 @@ int handle_single_txt() {
         printf("Word: %s, count: %d\n\r", words[i], counts[i]);
     }
     return STATUS_OK;
+}
+
+int main(int argc, char **argv) {
+    while (1) {
+        int ret = handle_single_txt();
+        if (ret == STATUS_FAIL) {
+            return 1;
+        } else if (ret == STATUS_END) {
+            break;
+        }
+    }
+    cleanup();
+    return 0;
 }
