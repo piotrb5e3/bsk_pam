@@ -1,12 +1,12 @@
 OBJS = main.o authenticate.o counter.o word_reader.o
 HEADERS = authenticate.h counter.h
 CC = cc
-CFLAGS = -Wall -pedantic -g -DAUTH_PAM_APP=korpusowe
+CFLAGS = -Wall -pedantic
 LDFLAGS = -lpam -lpam_misc
 
 .PHONY: all clean
 
-all: pam_c
+all: korpusowe
 
 test: counter.o word_reader.o test.o
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
@@ -14,11 +14,11 @@ test: counter.o word_reader.o test.o
 test.o: test.c $(HEADERS)
 	$(CC) $(CFLAGS) -o $@ $< -c
 
-pam_c: $(OBJS)
+korpusowe: $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 $(OBJS) : %.o : %.c $(HEADERS)
 	$(CC) $(CFLAGS) -o $@ $< -c
 
 clean:
-	rm -f $(OBJS) test.o test pam_c
+	rm -f $(OBJS) test.o test korpusowe

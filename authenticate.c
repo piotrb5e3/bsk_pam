@@ -4,10 +4,6 @@
 #include <security/pam_misc.h>
 #include <security/pam_modules.h>
 
-#ifndef AUTH_PAM_APP
-#define AUTH_PAM_APP "sudo"
-#endif
-
 const int AUTH_OK = 1;
 const int AUTH_FAIL = 0;
 
@@ -20,7 +16,7 @@ int authenticate() {
     int retval = -1;
     pam_handle_t *pamh = NULL;
 
-    retval = pam_start(AUTH_PAM_APP, NULL, &login_conv, &pamh);
+    retval = pam_start("korpusowe", NULL, &login_conv, &pamh);
     if (pamh == NULL || retval != PAM_SUCCESS)
         return AUTH_FAIL;
 
