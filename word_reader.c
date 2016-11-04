@@ -1,7 +1,3 @@
-//
-// Created by piotr on 10/29/16.
-//
-
 #include "word_reader.h"
 
 #include <stdio.h>

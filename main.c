@@ -1,6 +1,3 @@
-//
-// Created by piotr on 26.10.16.
-//
 #include <stdio.h>
 #include "authenticate.h"
 #include "counter.h"
@@ -23,7 +20,9 @@ int main(int argc, char **argv) {
                 break;
             }
         }
-        cleanup();
+        if (cleanup() != COUNTER_OK) {
+            return 1;
+        }
     } else {
         printf("Auth failed!\n");
     }

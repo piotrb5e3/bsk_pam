@@ -1,7 +1,3 @@
-//
-// Created by piotr on 10/29/16.
-//
-
 #ifndef ZAD_PAM_COUNTER_H
 #define ZAD_PAM_COUNTER_H
 

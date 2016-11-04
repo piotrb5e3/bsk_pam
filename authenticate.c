@@ -1,12 +1,12 @@
-//
-// Created by piotr on 26.10.16.
-//
-
 #include "authenticate.h"
 
 #include <security/pam_appl.h>
 #include <security/pam_misc.h>
 #include <security/pam_modules.h>
+
+#ifndef AUTH_PAM_APP
+#define AUTH_PAM_APP "sudo"
+#endif
 
 const int AUTH_OK = 1;
 const int AUTH_FAIL = 0;
@@ -20,16 +20,24 @@ int authenticate() {
     int retval = -1;
     pam_handle_t *pamh = NULL;
 
-    retval = pam_start("sudo", NULL, &login_conv, &pamh);
+    retval = pam_start(AUTH_PAM_APP, NULL, &login_conv, &pamh);
     if (pamh == NULL || retval != PAM_SUCCESS)
         return AUTH_FAIL;
 
     retval = pam_set_item(pamh, PAM_USER_PROMPT, "Badania korpusowe?\n\r");
 
     retval = pam_authenticate(pamh, 0);
-    pam_end(pamh, retval);
-    if (retval != PAM_SUCCESS)
+    if (retval != PAM_SUCCESS) {
+        retval = pam_end(pamh, retval);
+        if (retval != PAM_SUCCESS)
+            fprintf(stderr, "Pam_end failed!\n\r");
         return AUTH_FAIL;
-    else
+    } else {
+        retval = pam_end(pamh, retval);
+        if (retval != PAM_SUCCESS) {
+            fprintf(stderr, "Pam_end failed!\n\r");
+            return AUTH_FAIL;
+        }
         return AUTH_OK;
+    }
 }
