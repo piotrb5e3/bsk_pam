@@ -19,6 +19,7 @@ size_t fline_ptr = 0;
 size_t fline_max_size = 0;
 
 bool is_first_line = true;
+bool last_was_newline = true;
 
 int fline_enlarge() {
     size_t new_size = fline_max_size * 2;
@@ -82,6 +83,7 @@ int wr_get_word(char *out_word, size_t word_arr_length) {
 
         if (c == '\n' || c == '\r') {
             is_first_line = false;
+            last_was_newline = true;
         }
 
         if ((c == '\n' || c == '\r' || c == EOF) && eq_count == 2) {
@@ -94,7 +96,7 @@ int wr_get_word(char *out_word, size_t word_arr_length) {
                 return WR_FAIL;
         }
 
-        if (c == '=') {
+        if (c == '=' && (last_was_newline || eq_count == 1)) {
             eq_count++;
         } else {
             eq_count = 0;
@@ -112,6 +114,10 @@ int wr_get_word(char *out_word, size_t word_arr_length) {
             wptr++;
         } else if (wptr > 0) {
             break;
+        }
+
+        if (c != '\n' && c != '\r' && last_was_newline) {
+            last_was_newline = false;
         }
     } while (wptr < word_arr_length - 1);
     for (size_t i = wptr; i < word_arr_length; i++) {
