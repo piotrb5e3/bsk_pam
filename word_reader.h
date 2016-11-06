@@ -8,7 +8,7 @@ extern const int WR_FAIL;
 extern const int WR_TXT_END;
 extern const int WR_PROG_END;
 
-int wr_get_word(char *out_word, size_t max_word_length);
+int wr_get_word(char *out_word, size_t word_arr_length);
 
 int wr_cleanup();
 

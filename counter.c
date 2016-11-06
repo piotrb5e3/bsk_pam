@@ -16,7 +16,7 @@ const int COUNTER_NOT_FOUND = 3;
 
 typedef struct {
     int count;
-    char word[WORDLEN];
+    char word[WORD_ARR_LEN];
 } wc;
 
 typedef wc *t_word_count;
@@ -82,11 +82,11 @@ int enlarge_if_needed() {
 
 
 int increase_counter_if_word_exists(const char *word) {
-    char w[WORDLEN];
-    strncpy(w, word, WORDLEN);
+    char w[WORD_ARR_LEN];
+    strncpy(w, word, WORD_ARR_LEN);
     for (int i = 0; i < word_counts_size; i++) {
         const char *candidate = (char *) word_counts[i]->word;
-        if (strncmp(candidate, word, WORDLEN) == 0) {
+        if (strncmp(candidate, word, WORD_ARR_LEN) == 0) {
             word_counts[i]->count++;
             return COUNTER_FOUND;
         }
@@ -105,7 +105,7 @@ int add_new_word(const char *word) {
         return COUNTER_FAIL;
     }
     new_word->count = 1;
-    strncpy(new_word->word, word, WORDLEN);
+    strncpy(new_word->word, word, WORD_ARR_LEN);
     word_counts[word_counts_size] = new_word;
     word_counts_size++;
     return COUNTER_OK;
@@ -122,7 +122,7 @@ int count_word(const char *word) {
 
 
 int count_words() {
-    char tmp_word[WORDLEN];
+    char tmp_word[WORD_ARR_LEN];
     const char *first_line = NULL;
     int ret = 0;
 
@@ -135,7 +135,7 @@ int count_words() {
         return COUNTER_FAIL;
 
     while (1) {
-        ret = wr_get_word(tmp_word, WORDLEN);
+        ret = wr_get_word(tmp_word, WORD_ARR_LEN);
         if (ret == WR_FAIL) {
             return COUNTER_FAIL;
         } else if (ret == WR_PROG_END) {

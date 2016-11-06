@@ -1,7 +1,7 @@
 OBJS = main.o authenticate.o counter.o word_reader.o
 HEADERS = authenticate.h counter.h
 CC = cc
-CFLAGS = -Wall -pedantic
+CFLAGS = -Wall -pedantic -std=c99
 LDFLAGS = -lpam -lpam_misc
 
 .PHONY: all clean

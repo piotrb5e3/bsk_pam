@@ -74,7 +74,7 @@ int wr_cleanup() {
 }
 
 
-int wr_get_word(char *out_word, size_t max_word_length) {
+int wr_get_word(char *out_word, size_t word_arr_length) {
     size_t wptr = 0;
     int c;
     do {
@@ -105,7 +105,7 @@ int wr_get_word(char *out_word, size_t max_word_length) {
         }
 
         if (c == EOF) {
-            fprintf(stderr, "Unexpected file end. Expected >>==\\n<<!\n\r");
+            fprintf(stderr, "Unexpected file end. Expected >>.<<!\n\r");
             return WR_FAIL;
         } else if (isalpha(c)) {
             out_word[wptr] = c;
@@ -113,8 +113,8 @@ int wr_get_word(char *out_word, size_t max_word_length) {
         } else if (wptr > 0) {
             break;
         }
-    } while (wptr <= max_word_length);
-    for (size_t i = wptr; i < max_word_length; i++) {
+    } while (wptr < word_arr_length - 1);
+    for (size_t i = wptr; i < word_arr_length; i++) {
         out_word[i] = '\0';
     }
     return WR_OK;

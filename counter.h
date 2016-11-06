@@ -1,7 +1,7 @@
 #ifndef ZAD_PAM_COUNTER_H
 #define ZAD_PAM_COUNTER_H
 
-#define WORDLEN 1024
+#define WORD_ARR_LEN 1024
 
 const int COUNTER_OK;
 const int COUNTER_END;
